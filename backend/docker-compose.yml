@@ -1,0 +1,27 @@
+services:
+  api:
+    build: .
+    container_name: greenbyte-api
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
+    depends_on:
+      - mongodb
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+      - MONGODB_URI=mongodb://mongodb:27017/greenbyte
+      - AUTO_SEED=true
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+
+  mongodb:
+    image: mongo:7
+    container_name: greenbyte-mongodb
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
