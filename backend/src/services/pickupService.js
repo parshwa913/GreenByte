@@ -484,7 +484,7 @@ async function updatePaymentDestination(pickupId, destination) {
   if (!pickup) throw new ApiError(404, 'Pickup not found');
 
   pickup.payment.destination = {
-    ...pickup.payment.destination.toObject(),
+    ...(pickup.payment.destination ? pickup.payment.destination.toObject() : {}),
     ...destination
   };
 
